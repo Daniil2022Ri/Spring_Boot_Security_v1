@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Security Example</title>
+
+</head>
+<body>
+<!-- Боковая панель -->
+<div class="sidebar">
+    <ul>
+        <li><a href="/">Main</a></li>
+        <li><a href="/register">Registration Panel</a></li>
+        <li><a href="/admin">Admin Panel</a></li>
+        <li><a href="/user">User Panel</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</div>
+
+<!-- Контейнер для содержимого -->
+<div class="container">
+    <h1>Welcome to Index PAGE!</h1>
+    <p>This is a sample page secured by Spring Security.</p>
+
+    <!-- Кнопка для перехода на страницу логина -->
+    <a href="/login" class="btn-login">Login</a>
+</div>
+</body>
+</html>
