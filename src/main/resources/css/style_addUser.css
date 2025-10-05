@@ -1,0 +1,240 @@
+header{
+
+}
+.status_role ,
+.container_role_panel,
+.sidebar button{
+    display: flex;
+}
+.table_all_users{
+    
+}
+
+.table_all__users th{
+
+    width: 100px;
+}
+
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Верхняя панель с email и ролями */
+.status_role {
+    background-color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.container_fluid {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.text_email {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.text_role {
+
+    color: white;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.logout a {
+
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.logout a:hover {
+    text-decoration: underline;
+}
+
+/* Основной контейнер */
+.container_role_panel {
+    display: flex;
+    gap: 20px;
+    padding: 0 30px;
+}
+
+/* Боковая панель с ролями */
+.sidebar {
+    width: 200px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: fit-content;
+}
+
+.sidebar .btn {
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: left;
+    padding: 10px 15px;
+    background-color: white;
+}
+
+.sidebar .btn.active {
+
+    color: white;
+}
+
+.sidebar .btn:hover:not(.active) {
+    background-color: #e9ecef;
+}
+
+/* Основная область контента */
+.container_panel_admin {
+    flex: 1;
+    background-color: white;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Заголовок Admin Panel */
+.text_role h1 {
+    margin: 0 0 20px 0;
+    color: #333;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* Кнопки Users table и New User */
+.container_btn_action {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.container_btn_action button {
+    padding: 8px 20px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.container_btn_action button:hover {
+    background-color: #545b62;
+}
+
+/* Разделительная линия */
+hr {
+    border: 0;
+    border-top: 1px solid #dee2e6;
+    margin: 20px 0;
+}
+
+/* Заголовок таблицы */
+.text_table h2 {
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Таблица */
+.table_all_users {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table_all__users {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.table_all__users thead {
+    background-color: #f8f9fa;
+}
+
+.table_all__users th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #dee2e6;
+    font-size: 14px;
+}
+
+.table_all__users tbody th {
+    font-weight: normal;
+    border-bottom: 1px solid #dee2e6;
+    padding: 12px 15px;
+}
+
+.table_all__users tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Кнопки в таблице */
+#btn_edit {
+    padding: 6px 12px;
+    font-size: 14px;
+  
+}
+
+#btn_delete {
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+#btn_edit:hover {
+    background-color: #138496;
+    border-color: #117a8b;
+}
+
+#btn_delete:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Убираем лишний hr внутри таблицы */
+.table_all__users hr {
+    display: none;
+}
+
+.first_name_new_user,
+.last_name_new_user,
+.age_new_user,
+.email_new_user,
+.password_new_user,
+.role_new_user,
+.container_add_new_user_btn ,
+.id_edit_user,
+.first_name_edit_user,
+.last_name_edit_user,
+.age_edit_user,
+.email_edit_user,
+.password_edit_user ,
+.id_delete_user,
+.first_name_delete_user,
+.last_name_delete_user,
+.age_delete_user,
+.email_delete_user,
+.password_delete_user{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+}
