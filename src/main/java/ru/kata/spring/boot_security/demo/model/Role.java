@@ -15,18 +15,46 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "name", unique = true)
     private String name;
 
-    public Role() {
-    }
+    // Конструкторы
+    public Role() {}
 
     public Role(String name) {
         this.name = name;
     }
 
+    public Role(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    // Геттеры и сеттеры
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // GrantedAuthority method
     @Override
     public String getAuthority() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
         return name;
     }
 
@@ -35,21 +63,11 @@ public class Role implements GrantedAuthority {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Role role = (Role) o;
-        return Objects.equals(name, role.name);
+        return name != null ? name.equals(role.name) : role.name == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name);
+        return name != null ? name.hashCode() : 0;
     }
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
-
-
 }

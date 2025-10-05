@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
@@ -15,6 +16,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.Set;
 
 @Controller
@@ -31,22 +33,35 @@ public class RegistrationController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
-        return "register";
+    @GetMapping("/registration")
+    public String registrationForm() {
+        return "registration";
     }
 
-    @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "register";
+    @PostMapping("/registration")
+    public String registerUser(@RequestParam String firstName,
+                               @RequestParam String lastName,
+                               @RequestParam String email,
+                               @RequestParam String password,
+                               Model model) {
+
+        if (userService.existsByEmail(email)) {
+            model.addAttribute("error", "User with this email already exists");
+            return "registration";
         }
-        Role userRole = roleService.getRoleByName("ROLE_USER");
-        user.setRoles(Set.of(userRole));
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.addUser(user);
-        return "redirect:/login?registered";
-    }
 
+        Role userRole = roleService.getRoleByName("ROLE_USER")
+                .orElseThrow(() -> new RuntimeException("Role ROLE_USER not found"));
+
+        User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setRoles(Collections.singleton(userRole));
+
+        userService.addUser(user);
+
+        return "redirect:/login?success";
+    }
 }

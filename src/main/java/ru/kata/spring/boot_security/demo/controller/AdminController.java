@@ -29,25 +29,22 @@ public class AdminController {
 
     @GetMapping("/edit/{id}")
     public String editUserForm(@PathVariable Long id, Model model) {
-        return userService.getUserById(id)
-                .map(user -> {
-                    model.addAttribute("user", user);
-                    return "edit-user";
-                })
-                .orElse("redirect:/admin?error=user_not_found");
+        User user = userService.getUserById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+        model.addAttribute("user", user);
+        return "edit-user";
     }
 
     @PostMapping("/edit/{id}")
     public String updateUser(@PathVariable Long id, @ModelAttribute User user) {
-        return userService.getUserById(id)
-                .map(existingUser -> {
-                    existingUser.setFirstName(user.getFirstName());
-                    existingUser.setLastName(user.getLastName());
-                    existingUser.setEmail(user.getEmail());
-                    userService.saveUser(existingUser);
-                    return "redirect:/admin?success";
-                })
-                .orElse("redirect:/admin?error=user_not_found");
+        User existingUser = userService.getUserById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setEmail(user.getEmail());
+        userService.updateUser(existingUser);
+        return "redirect:/admin?success";
     }
 
     @GetMapping("/delete/{id}")

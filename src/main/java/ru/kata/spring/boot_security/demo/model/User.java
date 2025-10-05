@@ -47,21 +47,15 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String firstName, String lastName, Integer age, String email, String password, Set<Role> roles) {
-        this.username = username;
+    public User(String firstName, String lastName, String email, String password, Set<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
         this.email = email;
         this.password = password;
         this.roles = roles;
     }
 
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
 
 
     @Override
@@ -69,10 +63,15 @@ public class User implements UserDetails {
         return password;
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return getRoles();
+    }
 
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     @Override
@@ -96,28 +95,12 @@ public class User implements UserDetails {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(username, user.username);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(username);
-    }
-
-    @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", age=" + age +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", roles=" + roles +
                 '}';
     }
