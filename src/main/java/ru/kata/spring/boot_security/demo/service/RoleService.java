@@ -6,23 +6,12 @@ import ru.kata.spring.boot_security.demo.dao.RoleRepository;
 import ru.kata.spring.boot_security.demo.model.Role;
 
 import java.util.List;
+import java.util.Optional;
 
-@Service
-public class RoleService {
-
-    private final RoleRepository roleRepository;
-
-    @Autowired
-    public RoleService(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
-
-    public List<Role> getAllRoles() {
-        return roleRepository.findAll();
-    }
-
-    public Role getRoleByName(String name) {
-        return roleRepository.findByName(name)
-                .orElseGet(() -> roleRepository.save(new Role("ROLE_USER")));
-    }
+public interface RoleService {
+    List<Role> getAllRoles();
+    Optional<Role> getRoleById(Long id);
+    Role saveRole(Role role);
+    void deleteRole(Long id);
+    Optional<Role> getRoleByName(String name);
 }

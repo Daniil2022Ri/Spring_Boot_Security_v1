@@ -7,50 +7,21 @@ import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
-public class UserService {
-    private final UserRepository userRepository;
+public interface UserService {
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    List<User> getAllUsers();
 
-    }
+    Optional<User> getUserById(Long id);
 
-    @Transactional
-    public void addUser(User user) {
-        if (user.getId() != null && this.userRepository.existsById(user.getId())) {
-            throw new IllegalArgumentException("User with this ID already exists. Use updateUser instead.");
-        }
-        this.userRepository.save(user);
-    }
+    User saveUser(User user);
 
-    public User getUser(Long id) {
-        return userRepository.findById(id).orElse(null);
-    }
+    void deleteUser(Long id);
 
-    @Transactional
-    public void updateUser(User user) {
-        if (user.getId() == null || !this.userRepository.existsById(user.getId())) {
-            throw new IllegalArgumentException("User does not exist. Use addUser instead.");
-        }
-        this.userRepository.save(user);
-    }
+    Optional<User> getUserByEmail(String email);
 
-    @Transactional
-    public void deleteUser(Long id) {
-        this.userRepository.deleteById(id);
-    }
-
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    public User getUserByUserName(String username) {
-        return userRepository.findByUsername(username).orElse(null);
-    }
-
-
+    boolean existsByEmail(String email);
 }
