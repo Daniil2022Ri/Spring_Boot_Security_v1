@@ -1,55 +1,45 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.AdminService;
 import ru.kata.spring.boot_security.demo.service.UserService;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    private final AdminService adminService;
 
-    private final UserService userService;
-
-    @Autowired
-    public AdminController(UserService userService) {
-        this.userService = userService;
+    public AdminController(AdminService adminService){
+        this.adminService = adminService;
     }
 
     @GetMapping
-    public String adminPage(Model model) {
-        List<User> users = userService.getAllUsers();
-        model.addAttribute("users", users);
+    public String adminPage(Model model){
+        model.addAttribute("users" , adminService.findAll());
         return "admin";
     }
-
-    @GetMapping("/edit/{id}")
-    public String editUserForm(@PathVariable Long id, Model model) {
-        User user = userService.getUserById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-        model.addAttribute("user", user);
-        return "edit-user";
+    @GetMapping
+    public void CreateNewUser(@ModelAttribute User user){
+        adminService.save(user);
+    }
+    @PostMapping("/delete/{username}")
+    public String deleteUser(@PathVariable String username) {
+        adminService.deleteByUsername(username);
+        return "redirect:/admin";
     }
 
-    @PostMapping("/edit/{id}")
-    public String updateUser(@PathVariable Long id, @ModelAttribute User user) {
-        User existingUser = userService.getUserById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setLastName(user.getLastName());
-        existingUser.setEmail(user.getEmail());
-        userService.updateUser(existingUser);
-        return "redirect:/admin?success";
+    @PostMapping("/edit")
+    public String editUser(@ModelAttribute User user) {
+        adminService.EditUser(user);
+        return "redirect:/admin";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return "redirect:/admin?success";
+    @PostMapping("/role/{username}")
+    public String toggleAdminRole(@PathVariable String username,
+                                  @RequestParam boolean isAdmin) {
+        return "redirect:/admin";
     }
 }
